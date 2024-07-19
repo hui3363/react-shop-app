@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import styles from './Nav.module.scss'
 
 const Nav = () => {
+	const isAuth = false;
 	return (
 		<nav className={styles.nav}>
 			<ul>
@@ -25,13 +26,16 @@ const Nav = () => {
 					</div>
 				</li>
 				<li>
+					{isAuth ?
 					<GoSignOut 
 						className={styles.nav_sign_out}
 						title="logout"
 					/>
+					:
 					<Link to={"/login"}>
 						<FiLogIn title="로그인" />
 					</Link>
+				}
 				</li>
 			</ul>
 		</nav>
