@@ -19,6 +19,10 @@ const DetailPage = () => {
 		dispatch(fetchProduct(productId));
 	}, [productId])
 
+	const addItemToCart = () => {
+		dispatch(addItemToCart(product));
+	}
+
 	return (
 		<div className='page'>
 			{isLoading? (
@@ -36,7 +40,10 @@ const DetailPage = () => {
 						<p>$ {product.price}</p>
 						<div>
 							<button
-							disabled={productMatching}>
+								disabled={productMatching}
+								onClick={() => !productMatching && addItemToCart()}
+								>
+									
 								{productMatching ? "장바구니에 담긴 제품" : "장바구니에 담기"}
 							</button>
 							<Link to="/cart">장바구니로 이동</Link>

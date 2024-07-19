@@ -3,9 +3,30 @@ import { FiLogIn, FiShoppingCart, FiUser } from 'react-icons/fi'
 import { GoSignOut } from 'react-icons/go'
 import { Link } from 'react-router-dom'
 import styles from './Nav.module.scss'
+import { useAuth } from '../../../hooks/useAuth'
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
+import { getAuth, signOut } from 'firebase/auth'
+import app from '../../../firebase'
+import { removeUser } from '../../../store/user/user.slice'
+import { removeUserId } from '../../../store/cart/cart.slice'
 
 const Nav = () => {
-	const isAuth = false;
+	const { isAuth } = useAuth();
+	const dispatch = useAppDispatch();
+	const auth = getAuth(app);
+	const { products } = useAppSelector((state) => state.cartSlice);
+
+
+	const handleSignOut = () => {
+			signOut(auth)
+					.then(() => {
+							dispatch(removeUser());
+							dispatch(removeUserId());
+					})
+					.catch((error) => {
+							console.error(error);
+					})
+	}
 	return (
 		<nav className={styles.nav}>
 			<ul>
@@ -26,10 +47,12 @@ const Nav = () => {
 					</div>
 				</li>
 				<li>
-					{isAuth ?
+					{
+					isAuth ?
 					<GoSignOut 
 						className={styles.nav_sign_out}
-						title="logout"
+						onClick={handleSignOut}
+						title="로그아웃"
 					/>
 					:
 					<Link to={"/login"}>
