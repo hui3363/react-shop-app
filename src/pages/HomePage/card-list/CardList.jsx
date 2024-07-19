@@ -8,9 +8,11 @@ const CardList = () => {
 
 	const dispatch = useAppDispatch();
 	const { products } = useAppSelector(state => state.productsSlice)
+	const category = useAppSelector(state => state.categoriesSlice)
+
 	useEffect(() => {
-		dispatch(fetchProducts());
-	}, [])
+		dispatch(fetchProducts(category?.toLowerCase()));
+	}, [category])
 
 	return (
 		<ul className={styles.card_list}>
