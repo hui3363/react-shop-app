@@ -16,7 +16,6 @@ const Nav = () => {
 	const auth = getAuth(app);
 	const { products } = useAppSelector((state) => state.cartSlice);
 
-
 	const handleSignOut = () => {
 			signOut(auth)
 					.then(() => {
@@ -36,6 +35,7 @@ const Nav = () => {
 							{" "}
 							<FiShoppingCart />
 						</Link>
+						{products.length > 0 && <b>{products.length}</b>}
 					</div>
 				</li>
 				<li>
